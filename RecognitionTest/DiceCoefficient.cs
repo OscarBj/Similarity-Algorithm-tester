@@ -6,16 +6,20 @@ namespace RecognitionTest
 {
     class DiceCoefficient : RecognitionAlgorithm
     {
-        public int min_score { get; set; }
+        public int score { get; set; } // In chars
+
+        private int maxDist { get; set; } // In % 
 
         private HashSet<string> setA;
         private HashSet<string> setB;
 
         public String name { get; set; }
 
-        public DiceCoefficient(int min_score, String name)
+        public DiceCoefficient(int score, int maxDist, String name)
         {
-            this.min_score = min_score;
+            this.score = score;
+            this.maxDist= maxDist;
+            this.name = name;
             setA = new HashSet<string>();
             setB = new HashSet<string>();
 
@@ -23,7 +27,6 @@ namespace RecognitionTest
 
         public int GetDistance(string strA, string strB)
         {
-   
             for (int i = 0; i < strA.Length - 1; ++i)
                 setA.Add(strA.Substring(i, 2));
 
@@ -33,7 +36,8 @@ namespace RecognitionTest
             HashSet<string> intersection = new HashSet<string>(setA);
             intersection.IntersectWith(setB);
 
-            return (2.0 * intersection.Count) / (setA.Count + setB.Count);
+            return (int) ((strA.Length*2) * (2.0 * intersection.Count) / (setA.Count + setB.Count));
         }
+        
     }
 }

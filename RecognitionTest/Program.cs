@@ -6,6 +6,7 @@ namespace RecognitionTest
 {
     class Program
     {
+        private static int maxDist;
 
         /* This program is used for testing string recognition algorithms performance
          * Following characteristics are measured:
@@ -31,17 +32,18 @@ namespace RecognitionTest
 
             string testWord = "uzeihzxuurprgub"; // hard coded test word for now
 
-            int maxDist = (100 - requiredMatch) / (100 / testWord.Length); // % -> max distance
+            maxDist = (100 - requiredMatch) / (100 / testWord.Length); // % -> max distance
+            Console.WriteLine($"INFO:Max distance in chars:{maxDist}");
 
             List<RecognitionAlgorithm> algorithms = new List<RecognitionAlgorithm>();
 
-            RecognitionAlgorithm levenshtein = new LevenshteinDistance(maxDist,"Levenshtein Distance");
-            RecognitionAlgorithm dicecoeff = new DiceCoefficient(maxDist,"Dice Coefficient");
-            RecognitionAlgorithm lcs = new LongestCommonSubsequence(maxDist,"LCS");
+            RecognitionAlgorithm levenshtein = new LevenshteinDistance(requiredMatch,maxDist,"Levenshtein Distance");
+            //RecognitionAlgorithm dicecoeff = new DiceCoefficient(requiredMatch,maxDist,"Dice Coefficient");
+            //RecognitionAlgorithm lcs = new LongestCommonSubsequence(requiredMatch,maxDist,"LCS");
 
             algorithms.Add(levenshtein);
-            algorithms.Add(dicecoeff);
-            algorithms.Add(lcs);
+            //algorithms.Add(dicecoeff);
+            //algorithms.Add(lcs);
 
             Stopwatch sw = new Stopwatch();
             foreach(RecognitionAlgorithm algorithm in algorithms)
@@ -65,8 +67,9 @@ namespace RecognitionTest
             foreach (string str in words)
             {
                 int score = algorithm.GetDistance(testWord, str);
-                if (score <= algorithm.min_score)
+                if (score <= maxDist)
                 {
+                   // return;
                     Console.WriteLine($"INFO:{algorithm.name} found match with score:{score}");
                 }
             }

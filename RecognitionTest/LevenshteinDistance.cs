@@ -9,13 +9,17 @@ namespace RecognitionTest
     class LevenshteinDistance : RecognitionAlgorithm
     {
 
-        public int min_score { get; set; }
+        public int score { get; set; }
+
+        private int maxDist { get; set; }
 
         public String name { get; set; }
 
-        public LevenshteinDistance(int min_score, String name)
+        public LevenshteinDistance(int min_score, int maxDist, String name)
         {
-            this.min_score = min_score;
+            this.score = min_score;
+            this.maxDist = maxDist;
+            this.name = name;
         }
 
         public int GetDistance(string src, string dest)
@@ -56,7 +60,7 @@ namespace RecognitionTest
                         d[i, j] = Math.Min(d[i, j], d[i - 2, j - 2] + cost); // transposition
                     }
                     // checks the score (optimization)
-                    if (d[str1.Length, str2.Length] > min_score)
+                    if (d[str1.Length, str2.Length] > maxDist)
                     {
                         return d[str1.Length, str2.Length];
                     }

@@ -8,7 +8,7 @@ namespace RecognitionTest
     {
         String name { get; set; }
 
-        int min_score { get; set; }
+        int score { get; set; }
         
         int GetDistance(String str1, String str2);
     }
