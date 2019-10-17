@@ -1,5 +1,5 @@
 # Similarity-Algorithm-tester
-This repository is for development of a program for similarity algorithm testing
+Similarity algorithm testing
 
 This program is for testing string comparison algorithms and their performance.
 The data which is used consists of 5000 words with the length of lenght 15 characters (generated using https://www.random.org/strings/). 
